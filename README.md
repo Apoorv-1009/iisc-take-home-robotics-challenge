@@ -3,7 +3,8 @@
 ## Part (a): Converting Dataset to .bag Files
 
 ### Dataset Used
-We utilized the KITTI Raw Data, available at [KITTI Raw Data](https://www.cvlibs.net/datasets/kitti/raw_data.php), to generate .bag files. These .bag files were created using the kitti2bag converter, which transforms the raw data into ROS1 bag files. The resulting rosbag files can be played back to access the data as ROS topics.
+We utilized the KITTI Raw Data, available at [KITTI Raw Data](https://www.cvlibs.net/datasets/kitti/raw_data.php), to generate .bag files. These .bag files were created using the kitti2bag converter, which transforms the raw data into ROS1 bag files. The resulting rosbag files can be played back to access the data as ROS topics. <br>
+The rosbag can be accessed here: [rosbag](https://drive.google.com/file/d/1HQxCmjTR5fmLiyYgU6XPJbWF5x1veHSb/view?usp=sharing)
 
 ## Part (b): Implementing PointNet on ROS
 
