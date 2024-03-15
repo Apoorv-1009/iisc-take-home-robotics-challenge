@@ -2,20 +2,20 @@
 
 ## Part (a): Converting Dataset to .bag Files
 
-### Dataset Used
-We utilized the KITTI Raw Data, available at [KITTI Raw Data](https://www.cvlibs.net/datasets/kitti/raw_data.php), to generate .bag files. These .bag files were created using the kitti2bag converter, which transforms the raw data into ROS1 bag files. The resulting rosbag files can be played back to access the data as ROS topics. <br>
+### Datasets Used
+The KITTI Raw Data, available at [KITTI Raw Data](https://www.cvlibs.net/datasets/kitti/raw_data.php), was used to generate .bag files. These .bag files were created using the kitti2bag converter, which transforms the raw data into ROS1 bag files. The resulting rosbag files can be played back to access the data as ROS topics. <br>
 The rosbag can be accessed here: [rosbag](https://drive.google.com/file/d/1HQxCmjTR5fmLiyYgU6XPJbWF5x1veHSb/view?usp=sharing)
 
 ## Part (b): Implementing PointNet on ROS
 
 ### Datasets Used
-We utilized the following datasets:
+The following datasets were utilized:
 - Left Colour Images: [Data Object Image 2](https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_image_2.zip)
 - Velodyne Point Clouds: [Data Object Velodyne](https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip)
 - Camera Calibration Matrices: [Data Object Calib](https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip)
 - Training Labels: [Data Object Label 2](https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip)
 
-These datasets were chosen based on the thesis presented in the referenced repository. For simplicity in running the code, a sample dataset containing 100 images is provided, streamlining the process to executing the code only.
+These datasets were taken based on the thesis presented in the referenced repository. For simplicity in running the code, a sample dataset containing 100 images is provided, streamlining the process to executing the code only.
 
 ### PointNet
 PointNet was implemented using the repository available at [3DOD Thesis](https://github.com/fregu856/3DOD_thesis/tree/master?tab=readme-ov-file#run-pretrained-extended-frustum-pointnet-model-on-kitti-val). Please ensure that all necessary dependencies are installed as per the instructions provided there.
