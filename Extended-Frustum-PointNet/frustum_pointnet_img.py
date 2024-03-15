@@ -109,7 +109,7 @@ class BboxNet(nn.Module):
 
         resnet34 = models.resnet34()
         # load pretrained model:
-        resnet34.load_state_dict(torch.load("/root/3DOD_thesis/pretrained_models/resnet/resnet34-333f7ec4.pth"))
+        resnet34.load_state_dict(torch.load("../pretrained_models/resnet/resnet34-333f7ec4.pth"))
         # remove fully connected layer:
         self.resnet34 = nn.Sequential(*list(resnet34.children())[:-2])
 
@@ -170,7 +170,8 @@ class FrustumPointNetImg(nn.Module):
 
         seg_point_clouds = np.zeros((0, 512, 3), dtype=np.float32) # (shape: (batch_size, 512=num_seg_points, 3))
         out_dont_care_mask = torch.ones((batch_size, )) # (shape: (batch_size, ))
-        out_dont_care_mask = out_dont_care_mask.type(torch.ByteTensor).cuda() # (NOTE! ByteTensor is needed for this to act as a selction mask)
+        # out_dont_care_mask = out_dont_care_mask.type(torch.ByteTensor).cuda() # (NOTE! ByteTensor is needed for this to act as a selction mask)
+        out_dont_care_mask = out_dont_care_mask.type(torch.ByteTensor)
         for i in range(seg_scores.shape[0]):
             ex_seg_scores = seg_scores[i] # (shape: (num_points, 2))
             ex_point_cloud = point_clouds[i] # (shape: (num_points, 3))
@@ -193,11 +194,13 @@ class FrustumPointNetImg(nn.Module):
 
         # subtract the point cloud centroid from each seg_point_cloud (transform to local coords):
         seg_point_clouds_mean = np.mean(seg_point_clouds, axis=1) # (shape: (batch_size, 3)) (seg_point_clouds has shape (batch_size, num_seg_points, 3))
-        out_seg_point_clouds_mean = Variable(torch.from_numpy(seg_point_clouds_mean)).cuda()
+        # out_seg_point_clouds_mean = Variable(torch.from_numpy(seg_point_clouds_mean)).cuda()
+        out_seg_point_clouds_mean = Variable(torch.from_numpy(seg_point_clouds_mean))
         seg_point_clouds_mean = np.expand_dims(seg_point_clouds_mean, axis=1) # (shape: (batch_size, 1, 3))
         seg_point_clouds = seg_point_clouds - seg_point_clouds_mean
 
-        seg_point_clouds = Variable(torch.from_numpy(seg_point_clouds)).cuda() # (shape: (batch_size, num_seg_points, 3))
+        # seg_point_clouds = Variable(torch.from_numpy(seg_point_clouds)).cuda() # (shape: (batch_size, num_seg_points, 3))
+        seg_point_clouds = Variable(torch.from_numpy(seg_point_clouds))
         seg_point_clouds = seg_point_clouds.transpose(2, 1) # (shape: (batch_size, 3, num_seg_points))
         ########################################################################
 

@@ -16,18 +16,21 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sequence = "0004"
+sequence = "000004"
 
 batch_size = 8
 
-network = FrustumPointNetImg("Extended-Frustum-PointNet_eval_val_seq", project_dir="/root/3DOD_thesis")
-network.load_state_dict(torch.load("/root/3DOD_thesis/pretrained_models/model_38_2_epoch_400.pth"))
-network = network.cuda()
+network = FrustumPointNetImg("Extended-Frustum-PointNet_eval_val_seq", project_dir="./3DOD_thesis")
+# network.load_state_dict(torch.load("../pretrained_models/model_38_2_epoch_400.pth"))
+
+network.load_state_dict(torch.load("../pretrained_models/model_38_2_epoch_400.pth", map_location=torch.device('cpu')))
+
+# network = network.cuda()
 
 NH = network.BboxNet_network.NH
 
-val_dataset = EvalSequenceDatasetFrustumPointNetImg(kitti_data_path="/root/3DOD_thesis/data/kitti",
-                                                    kitti_meta_path="/root/3DOD_thesis/data/kitti/meta",
+val_dataset = EvalSequenceDatasetFrustumPointNetImg(kitti_data_path="../data/kitti", 
+                                                    kitti_meta_path="../data/kitti/meta",
                                                     NH=NH, sequence=sequence)
 
 num_val_batches = int(len(val_dataset)/batch_size)

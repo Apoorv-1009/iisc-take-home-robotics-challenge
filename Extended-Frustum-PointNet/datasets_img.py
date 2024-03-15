@@ -2,7 +2,7 @@
 
 import sys
 sys.path.append("/root/3DOD_thesis/utils")
-from kittiloader import LabelLoader2D3D, calibread, LabelLoader2D3D_sequence # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
+from utils.kittiloader import LabelLoader2D3D, calibread, LabelLoader2D3D_sequence # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 
 import torch
 import torch.utils.data
@@ -59,7 +59,7 @@ def getBinCenters(bin_numbers, NH):
 class DatasetFrustumPointNetImgAugmentation(torch.utils.data.Dataset):
     def __init__(self, kitti_data_path, kitti_meta_path, type, NH):
         self.img_dir = kitti_data_path + "/object/training/image_2/"
-        self.label_dir = kitti_data_path + "/object/training/label_2/"
+        self.label_dir = kitti_data_path + "/object/training/label_2"
         self.calib_dir = kitti_data_path + "/object/training/calib/"
         self.lidar_dir = kitti_data_path + "/object/training/velodyne/"
 
@@ -76,7 +76,10 @@ class DatasetFrustumPointNetImgAugmentation(torch.utils.data.Dataset):
             self.centered_frustum_mean_xyz = self.centered_frustum_mean_xyz.astype(np.float32)
 
         self.examples = []
-        for img_id in img_ids:
+        # for img_id in img_ids:
+        for i in range (0,50):
+            img_id = img_ids[i]
+            # print(img_id)
             labels = LabelLoader2D3D(img_id, self.label_dir, ".txt", self.calib_dir, ".txt")
             for label in labels:
                 label_2d = label["label_2D"]
@@ -208,8 +211,8 @@ class DatasetFrustumPointNetImgAugmentation(torch.utils.data.Dataset):
         bbox_2d_img = img[int(np.max([0, v_min])):int(v_max), int(np.max([0, u_min])):int(u_max)]
         bbox_2d_img = cv2.resize(bbox_2d_img, (224, 224))
 
-        # cv2.imshow("test", bbox_2d_img)
-        # cv2.waitKey(0)
+        cv2.imshow("test", bbox_2d_img)
+        cv2.waitKey(0)
 
         ########################################################################
         # InstanceSeg ground truth:
@@ -458,6 +461,7 @@ class DatasetFrustumPointNetImgAugmentation(torch.utils.data.Dataset):
         label_corner_flipped = torch.from_numpy(label_corner_flipped) # (shape: (8, 3))
 
         return (centered_frustum_point_cloud_camera, bbox_2d_img, label_InstanceSeg, label_TNet, label_BboxNet, label_corner, label_corner_flipped)
+        # return (centered_frustum_point_cloud_camera, bbox_2d_img, label_InstanceSeg, label_TNet, label_BboxNet, label_corner, label_corner_flipped, img_id, input_2Dbbox, frustum_R, frustum_angle, self.centered_frustum_mean_xyz)
 
     def __len__(self):
         return self.num_examples

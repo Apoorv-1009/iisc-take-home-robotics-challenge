@@ -2,15 +2,18 @@
 
 import sys
 sys.path.append("/root/3DOD_thesis/utils")
-from kittiloader import LabelLoader2D3D, calibread, LabelLoader2D3D_sequence # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
+from utils.kittiloader import LabelLoader2D3D, calibread, LabelLoader2D3D_sequence # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 
 import torch
 import torch.utils.data
-
+# from visualization.visualize_eval_test_seq import draw_2d_polys
 import os
 import pickle
 import numpy as np
 import math
+import cv2
+
+
 
 # # # # # # # # # # debug visualizations START:
 # import sys
@@ -74,7 +77,7 @@ def getBinCenters(bin_numbers, NH):
 class DatasetFrustumPointNetAugmentation(torch.utils.data.Dataset):
     def __init__(self, kitti_data_path, kitti_meta_path, type, NH):
         self.img_dir = kitti_data_path + "/object/training/image_2/"
-        self.label_dir = kitti_data_path + "/object/training/label_2/"
+        self.label_dir = kitti_data_path + "/object/training/label_2"
         self.calib_dir = kitti_data_path + "/object/training/calib/"
         self.lidar_dir = kitti_data_path + "/object/training/velodyne/"
 
@@ -92,12 +95,17 @@ class DatasetFrustumPointNetAugmentation(torch.utils.data.Dataset):
 
         self.examples = []
         for img_id in img_ids:
+            if img_id == "000100":
+            # if img_id == "000005":
+                break
             labels = LabelLoader2D3D(img_id, self.label_dir, ".txt", self.calib_dir, ".txt")
             for label in labels:
                 label_2d = label["label_2D"]
                 if label_2d["truncated"] < 0.5 and label_2d["class"] == "Car":
                     label["img_id"] = img_id
                     self.examples.append(label)
+
+            # break
 
         self.num_examples = len(self.examples)
 
