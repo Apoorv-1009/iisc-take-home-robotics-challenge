@@ -18,7 +18,7 @@ We utilized the following datasets:
 These datasets were chosen based on the thesis presented in the referenced repository. For simplicity in running the code, a sample dataset containing 100 images is provided, streamlining the process to executing the code only.
 
 ### PointNet
-We implemented PointNet using the repository available at [3DOD Thesis](https://github.com/fregu856/3DOD_thesis/tree/master?tab=readme-ov-file#run-pretrained-extended-frustum-pointnet-model-on-kitti-val). Please ensure that all necessary dependencies are installed as per the instructions provided there.
+PointNet was implemented using the repository available at [3DOD Thesis](https://github.com/fregu856/3DOD_thesis/tree/master?tab=readme-ov-file#run-pretrained-extended-frustum-pointnet-model-on-kitti-val). Please ensure that all necessary dependencies are installed as per the instructions provided there.
 
 #### Frustum PointNet
 The Frustum PointNet architecture accepts two inputs: Point Cloud Data and a 2D Bounding Box. The 2D bounding box is geometrically extruded to extract the corresponding frustum point cloud, encompassing all points in the LiDAR point cloud lying inside the 2D box when projected onto the image plane.
