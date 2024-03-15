@@ -62,5 +62,7 @@ The integration of the running PointNet code into ROS remains outstanding. Below
 
 - Play the rosbag.
 - Read the PointCloud and Image data from the generated topics in the rosbag.
-- Convert the PointCloud and Image data into a format suitable for input to the network.
+- Convert the PointCloud and Image data into a format suitable for input to the data loader.
+- Feed the output of the data loader to the network
+- Use the frustum_point_clouds and bbox_2d_imgs as inputs to the network (depends on usage of frustum or extended-frustum network)
 - The generated output would be the 3D bounding box of the detected cars in the rosbag.
